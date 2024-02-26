@@ -31,3 +31,9 @@ my_human.keys.set_from_dict(my_newBody_dict)
 ## so all customisation is done, can be done thtough api, 
 
 ## need to connect this with front end, write functions to take in inputs and apply them in this context or in other words just replace the numbers in the dict
+
+##Adding clothes onto the MODEL
+
+cloths_options = my_human.clothing.outfit.get_options()
+chosen_option = cloths_options[1] # Select specific one, or randomly
+my_human.clothing.outfit.set(chosen_option)
