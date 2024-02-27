@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.CreateModel-MainContainer{
+    border: hidden;
+    border-color: aqua;
+    display: flex;
+    justify-content: center;
+    margin-top: 7rem;
+}
+
+.CreateModel-OutlineContainer{
+    border: solid;
+    border-color: black;
+    border-radius: 10px;
+    border-width: 10px;
+    height:  50rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 10px;
+
+}
+
+.CreateModel-InputContainer input {
+    border-radius: 10px;
+}
+
+.CreateModel-InputContainer{
+    border: solid;
+    width: 360px;
+    border-color: green;
+    display: flex;
+    justify-content:  right;
+    margin: 10px 0;
+    height: auto;
+    padding: 10px 10px;
+}
+
+.CreateModel-InputCategoryText{
+    border: hidden;
+    margin-right: 10px;
+    margin-top: 8px;
+    align-self: center;
+}
+
+.CreateModel-CreateButton{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.CreateModel-Carousel{
+    border: solid;
+    width: 200px;
+    border-radius: 12px;
+}

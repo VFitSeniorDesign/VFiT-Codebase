@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.App {
+  text-align: center;
+  background-color: white;
+  margin-top: 5rem;
+}
+
+
+.App-MainContainer{
+  border: solid;
+  border-color: red;
+  height: 55rem;
+}
+ 
+.App-MainContainer .App-ItemContainer{
+  border: hidden;
+  border-color: blue;
+  margin: 10px 10px;
+  height: 45rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-SideMenu{
+  border: solid;
+  width: 30rem;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+
+.App-ModelDisplay{
+  border: solid;
+  width: 25rem;
+}

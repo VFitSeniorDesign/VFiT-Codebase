@@ -1,0 +1,19 @@
+.CustomNavbar-MainContainer{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.938);
+    border-bottom: solid;
+    border-bottom-width: 5px;
+    border-color: rgb(0, 0, 0);
+    border-bottom-left-radius: 25%;
+    border-bottom-right-radius: 25%;
+    height: 80px;
+}
+
+.CustomNavbar-ItemsContainer{
+    display: flex;
+    justify-content: space-between;
+    border: hidden;
+    width: 90%;
+    margin: auto auto;
+}
