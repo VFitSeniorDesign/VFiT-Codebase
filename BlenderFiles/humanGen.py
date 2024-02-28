@@ -1,4 +1,5 @@
 from HumGen3D import Human
+import bpy
 
 def create_human(name, age, height, skin_dict, body_dict, cloth_selection):
     # Human creation and customization logic
@@ -28,9 +29,11 @@ def customize_body_settings(muscularity, skinniness, overweight):
 
 def main():
     # Example inputs - these could be replaced with dynamic inputs from a UI or command line arguments
+    print("Hello from backend!")
     name = "John Doe"
     age = 22
     height = 180  # Example, adjust according to how you wish to use it
+    cloth_selection = 0 
 
     # Example skin settings dictionary
     skin_dict = {'tone': 1.340, 'redness': -0.025, 'saturation': 1.8, 'normal_strength': 4.69, 'roughness_multiplier': 2328.169, 'freckles': 0.5, 'splotches': 0.297468364238739, 'texture.set': 'textures/male/Default 4K/Male 10.png', 'cavity_strength': 0.0, 'gender_specific': {'mustache_shadow': 0.0, 'beard_shadow': 0.0}}
@@ -39,7 +42,7 @@ def main():
     body_dict = customize_body_settings(muscularity=1.0, skinniness=-1.0, overweight=0.0)
 
     # Call the function to create and customize the human model
-    create_human(name, age, height, skin_dict, body_dict)
+    create_human(name, age, height, skin_dict, body_dict, cloth_selection)
 
 if __name__ == "__main__":
     main()
