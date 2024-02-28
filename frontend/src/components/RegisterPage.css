@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.RegisterPage-MainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.RegisterPage-FormContainer {
+    padding: 40px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.RegisterPage-Title {
+    color: #333;
+    text-align: center;
+}
+
+.RegisterPage-Input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.RegisterPage-Input:focus {
+    border-color: #666;
+}
+
+.RegisterPage-SubmitButton {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.RegisterPage-SubmitButton:hover {
+    background-color: #333;
+}

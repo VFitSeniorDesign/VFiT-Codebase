@@ -10,7 +10,7 @@ class  User(AbstractUser):
     username = models.CharField(max_length = 15, unique = True)
 
 class HumanModel(models.Model):
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='human_model')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='human_model')
     model_file = models.FileField(upload_to='human_models/')
 
     def __str__(self):

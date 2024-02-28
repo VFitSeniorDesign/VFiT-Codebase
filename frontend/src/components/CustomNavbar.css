@@ -1,19 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 .CustomNavbar-MainContainer{
     display: flex;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.938);
+    background-color: transparent;
+    backdrop-filter: blur(30px);
     border-bottom: solid;
     border-bottom-width: 5px;
-    border-color: rgb(0, 0, 0);
+    border-color: rgb(255, 255, 255);
     border-bottom-left-radius: 25%;
     border-bottom-right-radius: 25%;
     height: 80px;
+    color: "white";
+    
 }
 
-.CustomNavbar-ItemsContainer{
+.CustomNavbar-MainContainer .CustomNavbar-ItemsContainer{
     display: flex;
     justify-content: space-between;
+    color: "white";
     border: hidden;
     width: 90%;
     margin: auto auto;
+}
+
+.CustomNavbar-MainContainer,
+.CustomNavbar-MainContainer .nav-link,
+.CustomNavbar-MainContainer .navbar-brand,
+.CustomNavbar-MainContainer .dropdown-toggle {
+    color: white !important; /* Ensures that this styling has priority */
+    font-family: 'Poppins', sans-serif;
 }

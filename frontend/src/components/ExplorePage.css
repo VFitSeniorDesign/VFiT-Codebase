@@ -1,0 +1,60 @@
+/* ExplorePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.explorePage {
+    background-color: #f5f1ed; /* Beige-ish background */
+    color: #333; /* Dark text for contrast */
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    text-align: center;
+
+  }
+  
+  section {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .explorePage h1 {
+    color: #222; /* Slightly darker color for headings */
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: large;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+  
+  .teamMembers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .teamMember {
+    text-align: center;
+    margin: 1rem;
+  }
+  
+  .teamMember img {
+    width: 150px; /* Adjust based on your preference */
+    height: auto; /* Adjust to maintain aspect ratio */
+    border-radius: 50%; /* Circular images */
+    margin-bottom: 1rem;
+    border: solid;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .teamMembers {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  

@@ -1,19 +1,21 @@
-import React from "react";
-import Container from 'react-bootstrap/Container';
+import React , { useContext }from "react";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './CustomNavbar.css'
+import { Button } from "react-bootstrap";
+import AuthContext from "./AuthContext";
 
 function CustomNavbar() {
+  let {user, logoutUser} = useContext(AuthContext)
   return (
     <Navbar expand="lg" fixed="top" className="CustomNavbar-MainContainer">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="CustomNavbar-ItemsContainer">
             <div style={{display: "flex", border: "hidden"}}>
-              <Nav.Link href="#home" style={{color: "black", fontSize: "1.2rem"}}>Explore</Nav.Link>
-              <Nav.Link href="#link" style={{color: "black", fontSize: "1.2rem"}}>Load</Nav.Link>
+              <Nav.Link href="/explore" style={{color: "black", fontSize: "1.2rem"}}>Explore</Nav.Link>
+              <Nav.Link href="/loadSaves" style={{color: "black", fontSize: "1.2rem"}}>Load</Nav.Link>
             </div>
             <Navbar.Brand 
                 href="/" 
@@ -30,10 +32,12 @@ function CustomNavbar() {
               <NavDropdown.Item href="#action/3.2">
                 Profile
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Saves</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Contact</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Contact
+              <NavDropdown.Item >
+                <Button style={{width: "100%", height: "100%", border: "hidden"}} onClick={logoutUser}>
+                  Logout
+                </Button>
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

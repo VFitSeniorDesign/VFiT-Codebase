@@ -1,34 +1,34 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import "./LoginPage.css";
-import { Navigate } from "react-router-dom";
-import { FaUser, FaLock} from "react-icons/fa"
+//import { Navigate } from "react-router-dom";
+import { FaUser, FaLock} from "react-icons/fa";
+import AuthContext from './AuthContext';
 
 function LoginPage(){
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    let {loginUser} = useContext(AuthContext);
 
     return(
         <div className="LoginPage-MainContainer">
-            <form  action= "" className="LoginPage-FormContainer">
-                <h1>Login</h1>
+            <form  action= "" onSubmit={loginUser} className="LoginPage-FormContainer">
+                <h1>Welcome</h1>
                 <div className="LoginPage-InputBox">
-                    <input type="text" placeholder='Username' requred />
+                    <input type="text" placeholder='Username' name="username" required />
                     <FaUser className="LoginPage-Icon"/>
                 </div>
                 <div className="LoginPage-InputBox">
-                    <input type="password" placeholder='Password' requred />
+                    <input type="password" placeholder='Password'  name="password" required />
                     <FaLock className="LoginPage-Icon"/>
                 </div>
 
                 <div className="LoginPage-RememberForgot">
                     <label><input type="checkbox" />Remember me</label>
-                    <a href="#"> Forgot Password </a>
+                    <a href="/register"> Forgot Password </a>
                 </div>
 
-                <button type="submit">Login</button>
+                <button type="submit" >Login</button>
 
                 <div className = "LoginPage-RegisterLink">
-                    <p> Dont have an account? <a href="#">Register</a></p>
+                    <p> Dont have an account? <a href="/register"> Register</a></p>
                 </div>
             </form>
         </div>
