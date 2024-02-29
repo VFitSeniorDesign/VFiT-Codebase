@@ -1,12 +1,12 @@
-// HumanoidModel.js
-import React, { useRef } from 'react';
-import { useLoader } from '@react-three/fiber';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { useFrame } from '@react-three/fiber';
+import React, { useRef } from "react";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useFrame } from "@react-three/fiber";
 
 function HumanoidModel({ modelPath }) {
-  const model = useLoader(OBJLoader, modelPath);
-  model.position.set(0,-2,0)
+  const gltf = useLoader(GLTFLoader, modelPath);
+  const model = gltf.scene;
+  model.position.set(0, -2, 0);
   const modelRef = useRef();
 
   // Optional: Add rotation
@@ -14,7 +14,7 @@ function HumanoidModel({ modelPath }) {
     modelRef.current.rotation.y += 0.01;
   });
 
-  return <primitive object={model} scale={[0.02, 0.02, 0.02]} ref={modelRef} />;
+  return <primitive object={model} ref={modelRef} />;
 }
 
 export default HumanoidModel;

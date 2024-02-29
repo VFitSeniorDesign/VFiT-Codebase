@@ -30,7 +30,17 @@ def customize_body_settings(muscularity, skinniness, overweight):
 def main():
     # Example inputs - these could be replaced with dynamic inputs from a UI or command line arguments
     print("Hello from backend!")
-    name = "John Doe"
+    bpy.ops.object.select_all(action='DESELECT')  # Deselect all objects
+
+# Select the default objects by their type
+    for obj in bpy.context.scene.objects:
+        if obj.type in ['CAMERA', 'LIGHT', 'MESH']:
+            obj.select_set(True)
+
+# Delete the selected objects
+    bpy.ops.object.delete() 
+    
+    name = "Mayank Yadav"
     age = 22
     height = 180  # Example, adjust according to how you wish to use it
     cloth_selection = 0 
@@ -41,8 +51,22 @@ def main():
     # Customize body settings based on inputs or logic
     body_dict = customize_body_settings(muscularity=1.0, skinniness=-1.0, overweight=0.0)
 
-    # Call the function to create and customize the human model
+        # Call the function to create and customize the human model
     create_human(name, age, height, skin_dict, body_dict, cloth_selection)
+    model_export_path = "/Users/aryan/Documents/GitHub/VFiT-Codebase/frontend/public/GeneratedModel.glb"
+
+# Export the model with materials in GLB format
+    bpy.ops.export_scene.gltf(
+        filepath=model_export_path,
+        export_format='GLB',
+        use_selection=False,  # Export the whole scene; set to True to export only selected objects
+        export_apply=True,  # Apply modifiers (if you want to apply them)
+        export_materials='EXPORT',  # Export materials
+        export_colors=True,  # Export vertex colors
+        export_extras=True,  # Export custom properties as glTF extras
+        export_yup=True,  # Convert to Y-up coordinate system if necessary
+    )
+
 
 if __name__ == "__main__":
     main()
