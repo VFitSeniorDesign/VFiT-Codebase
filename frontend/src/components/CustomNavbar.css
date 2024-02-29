@@ -11,14 +11,14 @@
     border-bottom-left-radius: 25%;
     border-bottom-right-radius: 25%;
     height: 80px;
-    color: "white";
+    color: "black";
     
 }
 
 .CustomNavbar-MainContainer .CustomNavbar-ItemsContainer{
     display: flex;
     justify-content: space-between;
-    color: "white";
+    color: "black";
     border: hidden;
     width: 90%;
     margin: auto auto;
@@ -28,6 +28,6 @@
 .CustomNavbar-MainContainer .nav-link,
 .CustomNavbar-MainContainer .navbar-brand,
 .CustomNavbar-MainContainer .dropdown-toggle {
-    color: white !important; /* Ensures that this styling has priority */
+    color: black !important; /* Ensures that this styling has priority */
     font-family: 'Poppins', sans-serif;
 }

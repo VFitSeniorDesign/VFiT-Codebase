@@ -64,6 +64,7 @@ function CreateModel() {
           <p className="CreateModel-InputCategoryText">Age: </p>
           <input
             type="text"
+            className="CreateModel-InputCategoryText"
             value={age}
             onChange={(e) => setAge(e.target.value)}
           />
@@ -72,6 +73,7 @@ function CreateModel() {
           <p className="CreateModel-InputCategoryText">Height: </p>
           <input
             type="text"
+            className="CreateModel-InputCategoryText"
             value={height}
             onChange={(e) => setHeight(e.target.value)}
           />
@@ -81,6 +83,7 @@ function CreateModel() {
           <input
             type="text"
             value={muscularity}
+            className="CreateModel-InputCategoryText"
             onChange={(e) => setMuscularity(e.target.value)}
           />
         </div>
@@ -88,6 +91,7 @@ function CreateModel() {
           <p className="CreateModel-InputCategoryText">Skinny (1-10): </p>
           <input
             type="text"
+            className="CreateModel-InputCategoryText"
             value={skinny}
             onChange={(e) => setSkinny(e.target.value)}
           />
@@ -96,6 +100,7 @@ function CreateModel() {
           <p className="CreateModel-InputCategoryText">Overweight (1-10): </p>
           <input
             type="text"
+            className="CreateModel-InputCategoryText"
             value={overweight}
             onChange={(e) => setOverweight(e.target.value)}
           />

@@ -13,7 +13,7 @@
     border: solid;
     border-color: black;
     border-radius: 10px;
-    border-width: 10px;
+    border-width: 2.5px;
     height:  50rem;
     display: flex;
     flex-direction: column;
@@ -28,6 +28,7 @@
 
 .CreateModel-InputContainer input {
     border-radius: 10px;
+    border: hidden;
 }
 
 .CreateModel-InputContainer{
@@ -51,6 +52,18 @@
 .CreateModel-CreateButton{
     margin-top: 2rem;
     margin-bottom: 2rem;
+    border: hidden;
+    border-radius: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 .CreateModel-Carousel{
