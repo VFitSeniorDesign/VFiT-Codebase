@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
-from base.models import User 
+from base.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.http import JsonResponse
@@ -19,7 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
-    
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -41,21 +41,29 @@ def create_model(request):
     # Define the path to Blender and your script
     blender_executable_path = '/Applications/Blender.app/Contents/MacOS/Blender'  # Or the full path if 'blender' is not in PATH
     script_path = '/Users/aryamangupta/Spring_24/VFiT-Codebase/BlenderFiles/humanGen.py'
-    
+
     # Construct the command to run Blender in the background with your script
     command = [
         blender_executable_path,
         # '--background',  # Run in background without UI
         '--python', script_path,
+        '--',
         # Separator between Blender args and script args
         # Add additional arguments passed to your script here
-        # str(data.get('param1', '')),  # Example: Convert parameters to strings
-        # str(data.get('param2', ''))
-        # Add more parameters as needed
-    ]
+        str(data.get('age', '')),
+        str(data.get('height', '')),
+        str(data.get('muscularity', '')),
+        str(data.get('skinny', '')),
+        str(data.get('overweight', '')),
+        str(data.get('skinColor', ''))
 
+    ]
+    '''
+
+    '''
     try:
         # Execute the Blender script
+        #print('here')
         result = subprocess.run(command, check=True, capture_output=True, text=True)
         output = result.stdout  # Capture the output from the script
         return JsonResponse({"response": "Script executed successfully!", "output": output})

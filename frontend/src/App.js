@@ -17,7 +17,8 @@ function App() {
                 <directionalLight position={[0, 10, 5]} intensity={1} />
                 <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
                 <pointLight position={[-10, -10, -10]} />
-                {/* <HumanoidModel modelPath="/model.obj" /> */}
+                {/* <HumanoidModel modelPath="/model.obj" /> */
+                <HumanoidModel modelPath="/generatedModel.glb" /> }
               </Canvas>
             </div>
 
