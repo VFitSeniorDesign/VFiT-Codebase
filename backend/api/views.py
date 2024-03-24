@@ -36,8 +36,7 @@ def register_user(request):
 def create_model(request):
     data = request.data
     print(data)
-    #run blender script below and generate data
-    # return Response({"response": "All good, data recieved!"})
+    
     # Define the path to Blender and your script
     blender_executable_path = '/Applications/Blender.app/Contents/MacOS/Blender'  # Or the full path if 'blender' is not in PATH
     script_path = '/Users/aryan/Documents/GitHub/VFiT-Codebase/BlenderFiles/humanGen.py'
@@ -55,9 +54,8 @@ def create_model(request):
     ]
 
     try:
-        # Execute the Blender script
         result = subprocess.run(command, check=True, capture_output=True, text=True)
-        output = result.stdout  # Capture the output from the script
+        output = result.stdout 
         return JsonResponse({"response": "Script executed successfully!", "output": output})
     except subprocess.CalledProcessError as e:
         # Handle errors in script execution
