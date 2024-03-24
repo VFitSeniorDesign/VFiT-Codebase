@@ -39,7 +39,7 @@ def create_model(request):
     
     # Define the path to Blender and your script
     blender_executable_path = '/Applications/Blender.app/Contents/MacOS/Blender'  # Or the full path if 'blender' is not in PATH
-    script_path = '/Users/aryan/Documents/GitHub/VFiT-Codebase/BlenderFiles/humanGen.py'
+    script_path = '/Users/mayankyadav/Desktop/VFiT-Codebase/BlenderFiles/humanGen.py'
     
     # Construct the command to run Blender in the background with your script
     command = [
