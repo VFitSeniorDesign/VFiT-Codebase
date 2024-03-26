@@ -64,7 +64,8 @@ def create_model(request):
         str(data.get('overweight', '')),
         str(data.get('skinColor', '')),
         str(username),
-        str(output_directory)
+        str(output_directory),
+        str(data.get('selectedClothing',''))
     ]
     
     try:

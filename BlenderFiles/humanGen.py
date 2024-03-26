@@ -85,6 +85,7 @@ def main():
     skinColor = argv[5]
     username = argv[6]
     output_directory = argv[7]
+    selected_clothing = argv[8]
     #error logging
 
     with open('output.log', 'w') as f:
@@ -129,6 +130,12 @@ def main():
     else:
         overweight = (int(overweight) - 5)/5
 
+    if selected_clothing == '':
+        cloth_selection = 0
+    else:
+        if selected_clothing == 'Casual':
+            cloth_selection = 6
+    
     # Example skin settings dictionary
     skin_dict = {'tone': 1.340, 'redness': -0.025, 'saturation': 1.8, 'normal_strength': 4.69, 'roughness_multiplier': 2328.169, 'freckles': 0.5, 'splotches': 0.297468364238739, 'texture.set': 'textures/male/Default 4K/Male 10.png', 'cavity_strength': 0.0, 'gender_specific': {'mustache_shadow': 0.0, 'beard_shadow': 0.0}}
 

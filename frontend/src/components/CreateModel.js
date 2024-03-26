@@ -9,12 +9,14 @@ function CreateModel() {
   let { authTokens } = useContext(AuthContext);
   console.log("authToken: ", authTokens);
   const skinTones = ["#F1C27D", "#FFDBAC", "#E0AC69", "#C68642", "#8D5524"];
+  const clothingOptions = ["Formal", "Casual"]
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
   const [muscularity, setMuscularity] = useState("");
   const [skinny, setSkinny] = useState("");
   const [overweight, setOverweight] = useState("");
   const [skinColor, setSkinColor] = useState(skinTones[0]); // Default to first skin tone
+  const [selectedClothing, setSelectedClothing] = useState(""); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -32,6 +34,7 @@ function CreateModel() {
       skinny,
       overweight,
       skinColor,
+      selectedClothing,
     };
 
     try {
@@ -55,6 +58,11 @@ function CreateModel() {
   const handleSkinColorChange = (index) => {
     setSkinColor(skinTones[index]);
   };
+
+  const handleClothingChange = (index) => {
+    setSelectedClothing(clothingOptions[index]);
+  };
+
 
   return (
     <div className="CreateModel-MainContainer">
@@ -131,6 +139,34 @@ function CreateModel() {
               >
                 {/* You can place an image here or just use the background color */}
                 <span style={{ color: "#fff", fontWeight: "bold" }}></span>
+              </div>
+            ))}
+          </Carousel>
+        </div>
+         {/* New input field for clothing selection */}
+        <div className="CreateModel-InputContainer">
+          <p className="CreateModel-InputCategoryText">Clothing Selection: </p>
+          <Carousel
+            className="CreateModel-Carousel"
+            showArrows={true}
+            showStatus={false}
+            showIndicators={false}
+            showThumbs={false}
+            dynamicHeight={true}
+            emulateTouch={true}
+            onChange={handleClothingChange}
+          >
+            {clothingOptions.map((option, index) => (
+              <div
+                key={index}
+                style={{
+                  height: 50,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <span>{option}</span>
               </div>
             ))}
           </Carousel>
