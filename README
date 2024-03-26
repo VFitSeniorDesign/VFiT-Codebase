@@ -1,0 +1,8 @@
+Clone the following repository.
+Switch to the repo: cd VFiT-Codebase
+Make a virtual environment: python3 -m venv venv
+Activate venv: (mac) source venv/bin/activate (windows) cd venv/Scripts/activate.bat (or activate.ps1 for powershell)
+Install requirements: pip install -r r.txt
+Activate backend server: cd backend && python3 manage.py runserver
+Activate frontend server (new terminal): a. cd frontend b. npm install c. npm start
+cd backend , mkdir media/savedModels
