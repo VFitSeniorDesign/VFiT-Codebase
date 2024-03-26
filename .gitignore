@@ -2,4 +2,6 @@ venv
 node_modules
 __pycache__
 myenv
-.pyc
+media
+media/
+/media/

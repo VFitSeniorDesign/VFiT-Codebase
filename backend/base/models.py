@@ -11,7 +11,7 @@ class  User(AbstractUser):
 
 class HumanModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='human_model')
-    model_file = models.FileField(upload_to='human_models/')
+    model_path = models.CharField(max_length=255, blank=True, null=True, default = None)
 
     def __str__(self):
         return f"HumanModel for {self.user.username}"

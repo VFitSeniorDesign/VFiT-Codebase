@@ -83,6 +83,8 @@ def main():
     skinny = argv [3]
     overweight = argv[4]
     skinColor = argv[5]
+    username = argv[6]
+    output_directory = argv[7]
     #error logging
 
     with open('output.log', 'w') as f:
@@ -97,7 +99,7 @@ def main():
 
     #human generation
 
-    name = "Mayank Yadav"
+    name = username
     #age = 22
     #height = 180  # Example, adjust according to how you wish to use it
     cloth_selection = 0
@@ -135,11 +137,10 @@ def main():
 
         # Call the function to create and customize the human model
     create_human(name, age, height, skin_dict, body_dict, cloth_selection)
-    model_export_path = "/Users/aryamangupta/Spring_24/VFiT-Codebase/frontend/public/GeneratedModel.glb"
 
-# Export the model with materials in GLB format
+    # Export the model with materials in GLB format
     bpy.ops.export_scene.gltf(
-        filepath=model_export_path,
+        filepath=output_directory,
         export_format='GLB',
         use_selection=False,  # Export the whole scene; set to True to export only selected objects
         export_apply=True,  # Apply modifiers (if you want to apply them)
@@ -148,6 +149,8 @@ def main():
         export_extras=True,  # Export custom properties as glTF extras
         export_yup=True,  # Convert to Y-up coordinate system if necessary
     )
+
+    bpy.ops.wm.quit_blender()
 
 
 if __name__ == "__main__":

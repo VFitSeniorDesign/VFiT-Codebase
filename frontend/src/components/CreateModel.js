@@ -46,7 +46,7 @@ function CreateModel() {
       });
       const responseData = await response.json();
       console.log(responseData); // Log the response data
-      //   navigate("/"); // N
+      navigate("/"); // N
     } catch (error) {
       console.error("Failed to create model:", error);
     }
