@@ -1,68 +1,164 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./App.css";
-import HumanoidModel from "./components/HumanoidModel";
-import { Canvas } from "@react-three/fiber"; // Import Canvas
-import axios from "axios"; // Ensure axios is installed for making HTTP requests
-import AuthContext from "./components/AuthContext";
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import "./App.css"; // Assuming your CSS is still relevant for layout and styling
 
-function App() {
-  const [modelPath, setModelPath] = useState("");
-  const { authTokens } = useContext(AuthContext); // Use AuthContext
+const App = () => {
+  const threeJsContainerRef = useRef(null);
 
   useEffect(() => {
-    const fetchModelPath = async () => {
-      if (!authTokens) return; // If there are no auth tokens, return early
-      try {
-        const response = await fetch('/api/getmodel/', {
-          method: 'GET', // Specifies the request method
-          headers: {
-            'Content-Type': 'application/json', // Indicates the content type of the request
-            'Authorization': `Bearer ${authTokens.access}`, // Use auth token for authorization
-          },
-        });
-  
-        const data = await response.json(); // Parses the JSON response
-  
-        if (data.model_path) {
-          const fullPath = `http://127.0.0.1:8000/media/${data.model_path}`;
-          setModelPath(fullPath);
-        } else {
-          setModelPath("create");
-        }
-      } catch (error) {
-        console.error("There was an error fetching the model path", error);
-        setModelPath("create");
-      }
+    if (!threeJsContainerRef.current) {
+      console.warn("Three.js container not found");
+      return;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setClearColor("white");
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    threeJsContainerRef.current.appendChild(renderer.domElement);
+
+    const ambientLight = new THREE.AmbientLight(0xcccccc, 0.6);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 0).normalize();
+    scene.add(directionalLight);
+
+    const gltfLoader = new GLTFLoader();
+    const textureLoader = new THREE.TextureLoader();
+
+    const name = "HamzaGupta"; // Change this to your actual model name
+
+    const loadTexture = (path) => {
+      const texture = textureLoader.load(path);
+      texture.flipY = false;
+      texture.encoding = THREE.sRGBEncoding;
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return texture;
     };
-  
-    fetchModelPath();
-  }, [authTokens]); // Depend on authTokens to re-run when tokens change
+
+    gltfLoader.load(`/models/${name}.glb`, (gltf) => {
+      const model = gltf.scene;
+      model.scale.set(3, 3, 3);
+      model.position.y = -2;
+
+      model.traverse((child) => {
+        if (child.isMesh && child.name.startsWith("HG_")) {
+          console.log(child.name);
+          let material = child.material;
+          if (!material.isMeshStandardMaterial) {
+            material = new THREE.MeshStandardMaterial();
+            child.material = material;
+          }
+
+          // Dynamically loading textures for generic named parts
+          const textureTypes = {
+            map: "basecolor",
+            normalMap: "normal",
+            roughnessMap: "roughness",
+          };
+
+          Object.keys(textureTypes).forEach((textureKey) => {
+            const texturePostfix = textureTypes[textureKey];
+            const adaptedChildName = child.name.replace(/(\d+)$/, ".$1");
+            const texturePath = `/models/${name}_${adaptedChildName}_${texturePostfix}.png`;
+            material[textureKey] = loadTexture(texturePath);
+          });
+
+          material.needsUpdate = true;
+        }
+
+        // Direct mapping for "HG_Eyes"
+        if (child.isMesh && child.name === "HG_Eyes") {
+          let material = ensureStandardMaterial(child);
+          material.map = loadTexture(`/models/${name}_eyes_basecolor.png`);
+          material.needsUpdate = true;
+        }
+
+        // Direct mapping for "HG_TeethLower"
+        if (child.isMesh && child.name === "HG_TeethLower") {
+          let material = ensureStandardMaterial(child);
+          material.map = loadTexture(
+            `/models/${name}_lower_teeth_basecolor.png`
+          );
+          material.normalMap = loadTexture(
+            `/models/${name}_lower_teeth_normal.png`
+          );
+          material.roughnessMap = loadTexture(
+            `/models/${name}_lower_teeth_roughness.png`
+          );
+          material.needsUpdate = true;
+        }
+
+        // Direct mapping for "HG_TeethUpper"
+        if (child.isMesh && child.name === "HG_TeethUpper") {
+          let material = ensureStandardMaterial(child);
+          material.map = loadTexture(
+            `/models/${name}_upper_teeth_basecolor.png`
+          );
+          material.normalMap = loadTexture(
+            `/models/${name}_upper_teeth_normal.png`
+          );
+          material.roughnessMap = loadTexture(
+            `/models/${name}_upper_teeth_roughness.png`
+          );
+          material.needsUpdate = true;
+        }
+
+        // Direct mapping for "HG_Body"
+        if (child.isMesh && child.name === "HG_Body") {
+          let material = ensureStandardMaterial(child);
+          material.map = loadTexture(`/models/${name}_body_basecolor.png`);
+
+          material.normalMap = loadTexture(`/models/${name}_body_normal.png`);
+          material.roughnessMap = loadTexture(
+            `/models/${name}_body_roughness.png`
+          );
+          material.needsUpdate = true;
+        }
+      });
+
+      scene.add(model);
+    });
+
+    camera.position.z = 5;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      threeJsContainerRef.current.removeChild(renderer.domElement);
+    };
+  }, []);
 
   return (
-    <div className="App">
-      <div className="App-SecondaryMainContainer">
-        <div className="App-MainContainer">
-          <div className="App-ItemContainer">
-            <div className="App-SideMenu">Upper Body Apparel</div>
-            <div className="App-ModelDisplay">
-              {modelPath && modelPath !== "create" ? (
-                <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
-                  <ambientLight intensity={0.5} />
-                  <directionalLight position={[0, 10, 5]} intensity={1} />
-                  <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                  <pointLight position={[-10, -10, -10]} />
-                  <HumanoidModel modelPath={modelPath} />
-                </Canvas>
-              ) : (
-                <p>Create a model.</p>
-              )}
-            </div>
-            <div className="App-SideMenu">Lower Body Apparel</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div
+      id="three-js-container"
+      ref={threeJsContainerRef}
+      style={{ width: "100%", height: "100vh" }}
+    />
   );
+};
+
+function ensureStandardMaterial(child) {
+  if (!child.material.isMeshStandardMaterial) {
+    let material = new THREE.MeshStandardMaterial();
+    child.material = material;
+    return material;
+  }
+  return child.material;
 }
 
 export default App;
