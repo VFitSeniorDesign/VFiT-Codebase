@@ -23,6 +23,7 @@ def create_human(name, age, height, skin_dict, body_dict, cloth_selection):
     cloths_options = my_human.clothing.outfit.get_options()
     chosen_cloth = cloths_options[cloth_selection] # Select specific one, or randomly
     my_human.clothing.outfit.set(chosen_cloth)
+    return my_human
 
 def customize_body_settings(muscularity, skinniness, overweight):
     # Return a body settings dictionary with the specified customization
@@ -59,6 +60,7 @@ def main():
     output_directory = argv[7]
     #error logging
 
+
     with open('output.log', 'w') as f:
     # Redirect stdout to the file
         sys.stdout = f
@@ -74,7 +76,7 @@ def main():
     name = username
     #age = 22
     #height = 180  # Example, adjust according to how you wish to use it
-    cloth_selection = 0
+    cloth_selection = 15
 
     if not (age == ''):
         age = int(age)
@@ -108,11 +110,11 @@ def main():
     body_dict = customize_body_settings(muscularity=muscularity, skinniness=skinny, overweight=overweight)
 
         # Call the function to create and customize the human model
-    create_human(name, age, height, skin_dict, body_dict, cloth_selection)
-    output_directory = f"{output_directory}/{name}.glb"
-    # Export the model with materials in GLB format
+    my_human = create_human(name, age, height, skin_dict, body_dict, cloth_selection)
+    
+    output_directory_name = f"{output_directory}/{name}.glb"
     bpy.ops.export_scene.gltf(
-        filepath=output_directory,
+        filepath=output_directory_name,
         export_format='GLB',
         use_selection=False,  # Export the whole scene; set to True to export only selected objects
         export_apply=True,  # Apply modifiers (if you want to apply them)
@@ -121,6 +123,26 @@ def main():
         export_extras=True,  # Export custom properties as glTF extras
         export_yup=True,  # Convert to Y-up coordinate system if necessary
     )
+    
+    my_human.process.baking.bake_all()
+    
+
+    # Function to save all baked images to disk
+    def save_baked_images(directory):
+        for image in bpy.data.images:
+            # Skip unsaved or packed images
+            if not image.is_dirty and not image.packed_file:
+                filepath = f"{directory}/{image.name}.png"  # Define the file path for saving
+                image.save_render(filepath)
+                print(f"Saved: {filepath}")
+
+    # Save the baked images locally
+    # Replace "/path/to/save/" with the actual path where you want to save the images
+    save_baked_images(output_directory)
+
+    # Make sure to adjust the save path to a valid directory on your system.
+
+    # Export the model with materials in GLB format
 
     bpy.ops.wm.quit_blender()
 

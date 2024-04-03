@@ -46,7 +46,11 @@ def create_model(request):
     cwd = os.getcwd()
     script_path = os.path.join(cwd, "..", "BlenderFiles", "humanGen.py")
     print(script_path)
-    output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username+".glb")
+    #output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username+".glb")
+    #print("output_dir: ", output_directory)
+    output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username)
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
     print("output_dir: ", output_directory)
 
     # Construct the command to run Blender in the background with your script
@@ -68,18 +72,14 @@ def create_model(request):
     ]
     
     try:
-        # Execute the Blender script
-        #print('here')
-        #save model path to HumanModel based on user
-        #generated_model_path = os.path.join(cwd, "savedModels",  username + ".glb")
-        print("generated path: ",output_directory)
-        relative_model_path = os.path.join("savedModels", f"{username}.glb")
+        relative_dir = os.path.join("savedModels", username)
+        print("RELATIVE DIR: ", relative_dir)
         human_model, created = HumanModel.objects.get_or_create(user=request.user)
         print("human_model:", human_model)
         print("created:", created)
 
         # Update the model_path field with the generated model path
-        human_model.model_path = relative_model_path
+        human_model.model_path = relative_dir
         human_model.save()
 
 
@@ -97,13 +97,19 @@ def create_model(request):
 @api_view(['HEAD', 'GET'])
 #@permission_classes([IsAuthenticated])
 def fetch_model(request):
+    data = request.data
+    username = request.user.username
+    print("GET API USERNAME: ", username)
+
     try:
         # Attempt to fetch the HumanModel instance associated with the current user
         human_model = HumanModel.objects.get(user=request.user)
         # Check if a model_path exists
         if human_model.model_path:
             # Return the model_path if it exists
-            return Response({'model_path': human_model.model_path})
+            finalpath = os.path.join(human_model.model_path, username + ".glb")
+            print("GET API FINALPATH: ", finalpath)
+            return Response({'model_path': finalpath})
         else:
             # Return a message indicating the model_path is not available
             return Response({'message': 'No model path exists for the current user.'})
