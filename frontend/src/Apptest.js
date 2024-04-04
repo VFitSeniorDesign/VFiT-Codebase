@@ -6,10 +6,25 @@ import { Canvas } from "@react-three/fiber";
 import axios from "axios";
 import AuthContext from "./components/AuthContext";
 import CreateModelTest from "./components/CreateModelTest";
+import PresetSelector from "./components/PresetSelector";
 function Apptest() {
   const [modelPath, setModelPath] = useState("");
   const [files, setFiles] = useState([]);
   const { authTokens, user } = useContext(AuthContext); // Assuming `user` contains the username
+
+  const [modelPreset, setModelPreset] = useState(null);
+  const [clothPreset, setClothPreset] = useState(null);
+
+  // Handlers for PresetSelector
+  const handleModelPresetSelect = (preset) => {
+    setModelPreset(preset);
+    // Plus any additional logic needed when a model preset is selected
+  };
+
+  const handleClothPresetSelect = (preset) => {
+    setClothPreset(preset);
+    // Plus any additional logic needed when a cloth preset is selected
+  };
 
   useEffect(() => {
     const fetchModelPath = async () => {
@@ -63,7 +78,10 @@ function Apptest() {
               padding: "20px",
             }}
           >
-            {/* <OutfitSelector /> */}
+            <PresetSelector
+              onSelectModelPreset={handleModelPresetSelect}
+              onSelectClothPreset={handleClothPresetSelect}
+            />
           </Paper>
         </Grid>
         <Grid item xs={4} style={{ height: "100%" }}>

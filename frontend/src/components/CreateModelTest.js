@@ -11,9 +11,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Container,
+  Paper,
 } from "@mui/material";
 
-function CreateModelTest() {
+function CreateModelTest({ chosenPreset, chosenClothSelection }) {
   let { authTokens } = useContext(AuthContext);
   console.log("authToken: ", authTokens);
   const skinTones = ["#F1C27D", "#FFDBAC", "#E0AC69", "#C68642", "#8D5524"];
@@ -65,84 +67,88 @@ function CreateModelTest() {
   };
 
   return (
-    <Box
-      component="form"
-      noValidate
-      autoComplete="off"
-      onSubmit={handleSubmit}
-      sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" }, padding: 3 }}
-    >
-      <Typography variant="h5" gutterBottom>
-        Welcome! Come Create Your Own 3D Model!
+    <Container maxWidth="sm">
+      <Typography variant="h5" gutterBottom align="center" sx={{ mb: 3 }}>
+        Enter your attributes !
       </Typography>
-      <TextField
-        label="Age"
-        type="number"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-        variant="outlined"
-      />
-      <TextField
-        label="Height"
-        type="number"
-        value={height}
-        onChange={(e) => setHeight(e.target.value)}
-        variant="outlined"
-      />
 
-      {/* For sliders */}
-      <Typography id="muscularity-slider" gutterBottom>
-        Muscularity
-      </Typography>
-      <Slider
-        aria-labelledby="muscularity-slider"
-        value={muscularity}
-        onChange={handleSliderChange(setMuscularity)}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={1}
-        max={10}
-      />
-      <Slider
-        aria-labelledby="skinnyness-slider"
-        value={skinny}
-        onChange={handleSliderChange(setSkinny)}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={1}
-        max={10}
-      />
-      <Slider
-        aria-labelledby="overweight-slider"
-        value={overweight}
-        onChange={handleSliderChange(setOverweight)}
-        valueLabelDisplay="auto"
-        step={1}
-        marks
-        min={1}
-        max={10}
-      />
-      {/* Repeat for other sliders... */}
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+        sx={{
+          "& .MuiTextField-root": { m: 2 },
+          "& .MuiSlider-root": { m: 2 },
+          width: "100%",
+          maxWidth: 360,
+          mx: "auto",
+        }}
+      >
+        <TextField
+          fullWidth
+          label="Age"
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          variant="outlined"
+        />
+        <TextField
+          fullWidth
+          label="Height"
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+          variant="outlined"
+        />
 
-      <TextField
-        label="Cloth Selection"
-        value={clothSelection}
-        onChange={(e) => setClothSelection(e.target.value)}
-        variant="outlined"
-      />
-      <TextField
-        label="Preset"
-        value={preset}
-        onChange={(e) => setPreset(e.target.value)}
-        variant="outlined"
-      />
+        <Typography gutterBottom>Muscularity</Typography>
+        <Slider
+          value={muscularity}
+          onChange={handleSliderChange(setMuscularity)}
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={1}
+          max={10}
+        />
 
-      <Button type="submit" variant="contained" color="primary">
-        Create!
-      </Button>
-    </Box>
+        <Typography gutterBottom>Skinnyness</Typography>
+        <Slider
+          value={skinny}
+          onChange={handleSliderChange(setSkinny)}
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={1}
+          max={10}
+        />
+
+        <Typography gutterBottom>Overweight</Typography>
+        <Slider
+          value={overweight}
+          onChange={handleSliderChange(setOverweight)}
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={1}
+          max={10}
+        />
+
+        {/* Repeat for other sliders... */}
+
+        {/* Cloth selection and preset can be textfields or dropdowns based on your data */}
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          sx={{ mt: 2 }}
+        >
+          Create!
+        </Button>
+      </Box>
+    </Container>
   );
 }
 
