@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.conf import settings
 import subprocess
 import os
+import shutil
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -49,9 +50,9 @@ def create_model(request):
     #output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username+".glb")
     #print("output_dir: ", output_directory)
     output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username)
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
-    print("output_dir: ", output_directory)
+    if os.path.exists(output_directory):
+        shutil.rmtree(output_directory)  
+    os.makedirs(output_directory) 
 
     # Construct the command to run Blender in the background with your script
     command = [
