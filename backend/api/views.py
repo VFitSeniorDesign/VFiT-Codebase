@@ -66,7 +66,8 @@ def create_model(request):
         str(data.get('muscularity', '')),
         str(data.get('skinny', '')),
         str(data.get('overweight', '')),
-        str(data.get('skinColor', '')),
+        str(data.get('clothSelection', '')),
+        str(data.get('preset', '')),
         str(username),
         str(output_directory)
     ]
@@ -102,17 +103,23 @@ def fetch_model(request):
     print("GET API USERNAME: ", username)
 
     try:
-        # Attempt to fetch the HumanModel instance associated with the current user
         human_model = HumanModel.objects.get(user=request.user)
-        # Check if a model_path exists
         if human_model.model_path:
-            # Return the model_path if it exists
             finalpath = os.path.join(human_model.model_path, username + ".glb")
-            print("GET API FINALPATH: ", finalpath)
-            return Response({'model_path': finalpath})
+            
+            user_folder = os.path.join(settings.MEDIA_ROOT, f'savedModels/{username}/')
+            files = os.listdir(user_folder)
+            # Filter files to include only those that start with the username
+            filtered_files = [file for file in files if file.startswith(username)]
+            #print("FILTERED FILES: ", filtered_files)
+            file_urls = [request.build_absolute_uri(f'/media/savedModels/{username}/{file}') for file in filtered_files]
+            print("FILE URLS: ", file_urls)
+            return JsonResponse({'files': file_urls})
+            
+            #print("GET API FINALPATH: ", finalpath)
+            #return Response({'model_path': finalpath})
         else:
-            # Return a message indicating the model_path is not available
             return Response({'message': 'No model path exists for the current user.'})
     except HumanModel.DoesNotExist:
-        # Return a response indicating no HumanModel instance exists for the current user
         return Response({'message': 'No model information found for the current user.'}, status=404)
+    

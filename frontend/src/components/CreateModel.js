@@ -15,6 +15,8 @@ function CreateModel() {
   const [skinny, setSkinny] = useState("");
   const [overweight, setOverweight] = useState("");
   const [skinColor, setSkinColor] = useState(skinTones[0]); // Default to first skin tone
+  const [clothSelection, setClothSelection] = useState(""); // Default to first skin tone
+  const [preset, setPreset] = useState(""); // Default to first skin tone
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -31,7 +33,8 @@ function CreateModel() {
       muscularity,
       skinny,
       overweight,
-      skinColor,
+      clothSelection,
+      preset,
     };
 
     try {
@@ -106,35 +109,24 @@ function CreateModel() {
           />
         </div>
         <div className="CreateModel-InputContainer">
-          <p className="CreateModel-InputCategoryText">Skin Color: </p>
-          <Carousel
-            className="CreateModel-Carousel"
-            showArrows={true}
-            showStatus={false}
-            showIndicators={false}
-            showThumbs={false}
-            dynamicHeight={true}
-            emulateTouch={true}
-            selectedItem={skinTones.indexOf(skinColor)}
-            onChange={handleSkinColorChange}
-          >
-            {skinTones.map((color, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: color,
-                  height: 50,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {/* You can place an image here or just use the background color */}
-                <span style={{ color: "#fff", fontWeight: "bold" }}></span>
-              </div>
-            ))}
-          </Carousel>
+          <p className="CreateModel-InputCategoryText">Cloth Selection : </p>
+          <input
+            type="text"
+            className="CreateModel-InputCategoryText"
+            value={clothSelection}
+            onChange={(e) => setClothSelection(e.target.value)}
+          />
         </div>
+        <div className="CreateModel-InputContainer">
+          <p className="CreateModel-InputCategoryText">Preset </p>
+          <input
+            type="text"
+            className="CreateModel-InputCategoryText"
+            value={preset}
+            onChange={(e) => setPreset(e.target.value)}
+          />
+        </div>
+
         <button type="submit" className="CreateModel-CreateButton">
           Create!
         </button>
