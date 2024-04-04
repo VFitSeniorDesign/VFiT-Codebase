@@ -29,7 +29,6 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
   const [muscularity, setMuscularity] = useState(5);
   const [skinny, setSkinny] = useState(5);
   const [overweight, setOverweight] = useState(5);
-  const [skinColor, setSkinColor] = useState("");
   const [clothSelection, setClothSelection] = useState("");
   const [preset, setPreset] = useState("");
   const [muscularityModalOpen, setMuscularityModalOpen] = useState(false);
@@ -122,7 +121,6 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
       muscularity,
       skinny,
       overweight,
-      skinColor,
       chosenClothSelection,
       chosenPreset,
     };

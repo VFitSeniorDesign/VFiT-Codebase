@@ -67,8 +67,8 @@ def create_model(request):
         str(data.get('muscularity', '')),
         str(data.get('skinny', '')),
         str(data.get('overweight', '')),
-        str(data.get('clothSelection', '')),
-        str(data.get('preset', '')),
+        str(data.get('chosenClothSelection', '')),
+        str(data.get('chosenPreset', '')),
         str(username),
         str(output_directory)
     ]
