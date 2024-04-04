@@ -40,18 +40,42 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
   const navigate = useNavigate();
 
   const muscularityImages = [
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
+    `${process.env.PUBLIC_URL}/muscularityImages/M1.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M2.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M3.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M4.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M5.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M6.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M7.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M8.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M9.png`,
+    `${process.env.PUBLIC_URL}/muscularityImages/M10.png`,
   ]; // Placeholder for muscularity images
 
   const SkinnynessImages = [
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
+    `${process.env.PUBLIC_URL}/skinnynessImages/S1.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S2.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S3.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S4.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S5.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S6.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S7.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S8.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S9.png`,
+    `${process.env.PUBLIC_URL}/skinnynessImages/S10.png`,
   ]; // Placeholder for muscularity images
 
   const Overweightimages = [
-    "https://placehold.co/600x400",
-    "https://placehold.co/600x400",
+    `${process.env.PUBLIC_URL}/overweightImages/O1.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O2.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O3.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O4.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O5.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O6.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O7.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O8.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O9.png`,
+    `${process.env.PUBLIC_URL}/overweightImages/O10.png`,
   ]; // Placeholder for muscularity images
 
   const handleSliderChange = (setter) => (event, newValue) => {

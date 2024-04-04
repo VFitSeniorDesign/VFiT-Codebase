@@ -12,8 +12,8 @@ function Apptest() {
   const [files, setFiles] = useState([]);
   const { authTokens, user } = useContext(AuthContext); // Assuming `user` contains the username
 
-  const [modelPreset, setModelPreset] = useState(null);
-  const [clothPreset, setClothPreset] = useState(null);
+  const [modelPreset, setModelPreset] = useState(0);
+  const [clothPreset, setClothPreset] = useState(0);
 
   const handleModelPresetSelect = (preset) => {
     setModelPreset(preset);

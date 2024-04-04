@@ -20,6 +20,8 @@ const modelPresets = [
   `${process.env.PUBLIC_URL}/Presets/5_Asian4.jpg`,
   `${process.env.PUBLIC_URL}/Presets/6_Asian5.jpg`,
   `${process.env.PUBLIC_URL}/Presets/7_Asian6.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/8_Asian7.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/9_Asian1.jpg`,
   `${process.env.PUBLIC_URL}/Presets/10_David.jpg`,
   `${process.env.PUBLIC_URL}/Presets/11_Jude.jpg`,
   `${process.env.PUBLIC_URL}/Presets/12_Theo.jpg`,
@@ -43,6 +45,16 @@ const modelPresets = [
   `${process.env.PUBLIC_URL}/Presets/30_Hugo.jpg`,
   `${process.env.PUBLIC_URL}/Presets/31_Remy.jpg`,
   `${process.env.PUBLIC_URL}/Presets/32_Noah.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/33_Black1.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/34_Black3.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/35_Black2.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/36_Black4.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/37_Ben.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/38_Liam.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/39_Max.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/40_Michael.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/42_Terrence.jpg`,
+
   // ... Add additional images as necessary
 ];
 

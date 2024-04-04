@@ -56,8 +56,7 @@ def create_model(request):
 
     # Construct the command to run Blender in the background with your script
     command = [
-        blender_executable_path,
-        '--background',  # Run in background without UI
+        blender_executable_path,  # Run in background without UI
         '--python', script_path,
         '--',
         # Separator between Blender args and script args
