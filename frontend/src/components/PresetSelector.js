@@ -6,6 +6,7 @@ import {
   CardMedia,
   CardActions,
   Grid,
+  CardContent,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -18,47 +19,46 @@ const clothPresets = [
   "https://placehold.co/600x400",
   "https://placehold.co/600x400",
 ];
+
 function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
   const [selectedModel, setSelectedModel] = useState(0);
   const [selectedCloth, setSelectedCloth] = useState(0);
 
   const handleModelSelect = (newIndex) => {
-    setSelectedModel(newIndex);
-    onSelectModelPreset(modelPresets[newIndex]);
+    setSelectedModel(newIndex); // This schedules the state to be updated
+    onSelectModelPreset(newIndex); // Directly pass the new index
   };
 
   const handleClothSelect = (newIndex) => {
-    setSelectedCloth(newIndex);
-    onSelectClothPreset(clothPresets[newIndex]);
+    setSelectedCloth(newIndex); // This schedules the state to be updated
+    onSelectClothPreset(newIndex); // Directly pass the new index
   };
 
-  // Adjust these functions for selecting next and previous images
   const nextPreviousSelection = (array, index, setIndex, increment) => {
     setIndex(
       (prevIndex) => (prevIndex + increment + array.length) % array.length
     );
   };
-
   return (
     <Grid container padding={2}>
       <Grid item xs={12}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h6" gutterBottom sx={{ fontSize: "1rem" }}>
           Please select your model preset
         </Typography>
-        <Card>
+        <Card sx={{ maxWidth: 345, border: "1px solid #ccc", mb: 2 }}>
           <CardMedia
             component="img"
-            image={modelPresets[selectedModel]} // Assuming modelPresets contains URLs
+            height="194" // Adjusting image height
+            image={modelPresets[selectedModel]}
             alt={`Model Preset ${selectedModel}`}
           />
+          <CardContent />
           <CardActions>
             <IconButton
               onClick={() =>
-                nextPreviousSelection(
-                  modelPresets,
-                  selectedModel,
-                  setSelectedModel,
-                  -1
+                handleModelSelect(
+                  (selectedModel - 1 + modelPresets.length) %
+                    modelPresets.length
                 )
               }
             >
@@ -66,12 +66,7 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             </IconButton>
             <IconButton
               onClick={() =>
-                nextPreviousSelection(
-                  modelPresets,
-                  selectedModel,
-                  setSelectedModel,
-                  1
-                )
+                handleModelSelect((selectedModel + 1) % modelPresets.length)
               }
             >
               <ArrowForwardIosIcon />
@@ -80,23 +75,23 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h6" gutterBottom sx={{ fontSize: "1rem" }}>
           Please select your cloth selection
         </Typography>
-        <Card>
+        <Card sx={{ maxWidth: 345, border: "1px solid #ccc", mb: 2 }}>
           <CardMedia
             component="img"
-            image={clothPresets[selectedCloth]} // Assuming modelPresets contains URLs
-            alt={`Model Preset ${selectedCloth}`}
+            height="194" // Adjusting image height
+            image={clothPresets[selectedCloth]}
+            alt={`Cloth Preset ${selectedCloth}`}
           />
+          <CardContent />
           <CardActions>
             <IconButton
               onClick={() =>
-                nextPreviousSelection(
-                  clothPresets,
-                  selectedCloth,
-                  setSelectedCloth,
-                  -1
+                handleClothSelect(
+                  (selectedCloth - 1 + clothPresets.length) %
+                    clothPresets.length
                 )
               }
             >
@@ -104,12 +99,7 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             </IconButton>
             <IconButton
               onClick={() =>
-                nextPreviousSelection(
-                  clothPresets,
-                  selectedCloth,
-                  setSelectedCloth,
-                  1
-                )
+                handleClothSelect((selectedCloth + 1) % clothPresets.length)
               }
             >
               <ArrowForwardIosIcon />

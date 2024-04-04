@@ -33,6 +33,9 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
     setter(newValue);
   };
 
+  console.log(chosenPreset, "model from form ");
+  console.log(chosenClothSelection, "cloth from form ");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!age || !height) {
@@ -46,8 +49,8 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
       skinny,
       overweight,
       skinColor,
-      clothSelection,
-      preset,
+      chosenClothSelection,
+      chosenPreset,
     };
     try {
       const response = await fetch("/api/createmodel/", {

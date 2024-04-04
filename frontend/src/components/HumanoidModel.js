@@ -59,9 +59,7 @@ function HumanoidModel({ username, files, modelPath }) {
       model.position.y = -2;
 
       model.traverse((child) => {
-        console.log(child.name);
         if (child.isMesh && child.name.startsWith("HG_")) {
-          console.log(child.name);
           let material = child.material;
           if (!material.isMeshStandardMaterial) {
             material = new THREE.MeshStandardMaterial();

@@ -15,15 +15,18 @@ function Apptest() {
   const [modelPreset, setModelPreset] = useState(null);
   const [clothPreset, setClothPreset] = useState(null);
 
-  // Handlers for PresetSelector
   const handleModelPresetSelect = (preset) => {
     setModelPreset(preset);
-    // Plus any additional logic needed when a model preset is selected
+    console.log("Selected modelPreset index", modelPreset);
+    // This will correctly log the newly selected preset index.
+    // Additional logic for when a model preset is selected goes here.
   };
 
   const handleClothPresetSelect = (preset) => {
     setClothPreset(preset);
-    // Plus any additional logic needed when a cloth preset is selected
+    console.log("Selected clothPreset index", clothPreset);
+    // This will correctly log the newly selected preset index.
+    // Additional logic for when a cloth preset is selected goes here.
   };
 
   useEffect(() => {
@@ -60,12 +63,8 @@ function Apptest() {
     fetchModelPath();
   }, [authTokens, user.username]); // Depend on authTokens and user.username to re-run when either changes
 
-  console.log("modelPath: ", modelPath);
-  console.log("files: ", files);
-  console.log("user: ", user);
-
   return (
-    <div style={{ flexGrow: 1, height: "100vh" }}>
+    <div style={{ flexGrow: 1, height: "100vh", paddingTop: "100px" }}>
       {" "}
       {/* Ensure full height */}
       <Grid container spacing={2} style={{ height: "100%" }}>
@@ -76,6 +75,8 @@ function Apptest() {
             style={{
               height: "100%",
               padding: "20px",
+              position: "relative",
+              zIndex: 1,
             }}
           >
             <PresetSelector
@@ -115,7 +116,10 @@ function Apptest() {
               alignItems: "center",
             }}
           >
-            <CreateModelTest />
+            <CreateModelTest
+              chosenPreset={modelPreset}
+              chosenClothSelection={clothPreset}
+            />
           </Paper>
         </Grid>
       </Grid>
