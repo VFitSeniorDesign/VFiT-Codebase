@@ -57,7 +57,7 @@ def create_model(request):
     # Construct the command to run Blender in the background with your script
     command = [
         blender_executable_path,
-        # '--background',  # Run in background without UI
+        '--background',  # Run in background without UI
         '--python', script_path,
         '--',
         # Separator between Blender args and script args
@@ -87,6 +87,7 @@ def create_model(request):
 
         result = subprocess.run(command, check=True, capture_output=True, text=True)
         output = result.stdout  # Capture the output from the script
+        print(output)
         print("Success")
         return JsonResponse({"response": "Script executed successfully!", "output": output})
     except subprocess.CalledProcessError as e:

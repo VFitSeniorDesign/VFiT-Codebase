@@ -140,11 +140,14 @@ def main():
     # Function to save all baked images to disk
     def save_baked_images(directory):
         for image in bpy.data.images:
-            # Skip unsaved or packed images
-            if not image.is_dirty and not image.packed_file:
-                filepath = f"{directory}/{image.name}.png"  # Define the file path for saving
-                image.save_render(filepath)
-                print(f"Saved: {filepath}")
+            # Skip 'Render Result' or any image without data
+            if image.name == 'Render Result' or image.size[0] == 0:
+                print(f"Skipping: {image.name} (no data)")
+                continue
+            filepath = f"{directory}/{image.name}.png"  # Define the file path for saving
+            image.save_render(filepath)
+            print(f"Saved: {filepath}")
+
 
     # Save the baked images locally
     # Replace "/path/to/save/" with the actual path where you want to save the images
