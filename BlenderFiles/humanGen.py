@@ -1,4 +1,5 @@
 from HumGen3D import Human
+import HumGen3D 
 import bpy
 import sys
 import argparse
@@ -26,7 +27,20 @@ def create_human(name, age, height, body_dict, cloth_selection, preset):
     
     # Adjust as needed
     my_human.clothing.outfit.set(chosen_cloth)
-    
+    try:
+        my_human.hair.eyebrows.convert_to_haircards()
+    except HumGen3D.common.exceptions.HumGenException as e:
+        print(f"no eyebrows: {e}")
+    try:
+        my_human.hair.face_hair.convert_to_haircards()
+        
+    except HumGen3D.common.exceptions.HumGenException as e:
+        print(f"no facehair: {e}")
+    try:
+        my_human.hair.regular_hair.convert_to_haircards()
+    except HumGen3D.common.exceptions.HumGenException as e:
+        print(f"no hair: {e}")
+        
     return my_human
 
 def customize_body_settings(muscularity, skinniness, overweight):
@@ -122,6 +136,7 @@ def main():
 
         # Call the function to create and customize the human model
     my_human= create_human(name, age, height, body_dict, cloth_selection, preset)
+
     temp_directory = f"{output_directory}/{name}.glb"
     # Export the model with materials in GLB format
     bpy.ops.export_scene.gltf(
