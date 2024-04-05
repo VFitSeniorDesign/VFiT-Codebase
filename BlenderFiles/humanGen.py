@@ -26,7 +26,7 @@ def create_human(name, age, height, body_dict, cloth_selection, preset):
     
     # Adjust as needed
     my_human.clothing.outfit.set(chosen_cloth)
-
+    
     return my_human
 
 def customize_body_settings(muscularity, skinniness, overweight):

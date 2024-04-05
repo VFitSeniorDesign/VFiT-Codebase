@@ -45,6 +45,8 @@ const modelPresets = [
   `${process.env.PUBLIC_URL}/Presets/30_Hugo.jpg`,
   `${process.env.PUBLIC_URL}/Presets/31_Remy.jpg`,
   `${process.env.PUBLIC_URL}/Presets/32_Noah.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/killianmcshane.jpeg`,
+  `${process.env.PUBLIC_URL}/Presets/ProfessorOsama.jpg`,
   `${process.env.PUBLIC_URL}/Presets/33_Black1.jpg`,
   `${process.env.PUBLIC_URL}/Presets/34_Black3.jpg`,
   `${process.env.PUBLIC_URL}/Presets/35_Black2.jpg`,
