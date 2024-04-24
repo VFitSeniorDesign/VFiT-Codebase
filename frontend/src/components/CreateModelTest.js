@@ -234,7 +234,7 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
         />
 
         <Typography gutterBottom>
-          Overweight{" "}
+          Weight in range 1-10{" "}
           <IconButton onClick={toggleOverweightModal}>
             <HelpOutlineIcon />
           </IconButton>

@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const modelPresets = [
+const maleModelPresets = [
   `${process.env.PUBLIC_URL}/Presets/0_Luke.jpg`,
   `${process.env.PUBLIC_URL}/Presets/1_Enzo.jpg`,
   `${process.env.PUBLIC_URL}/Presets/2_John.jpg`,
@@ -60,7 +62,7 @@ const modelPresets = [
   // ... Add additional images as necessary
 ];
 
-const clothPresets = [
+const maleClothPresets = [
   `${process.env.PUBLIC_URL}/Humangen_Clothing/0_Open_Suit.jpg`,
   `${process.env.PUBLIC_URL}/Humangen_Clothing/1_Relaxed_Dresscode.jpg`,
   `${process.env.PUBLIC_URL}/Humangen_Clothing/2_Suit_N_Tie.jpg`,
@@ -89,9 +91,33 @@ const clothPresets = [
   `${process.env.PUBLIC_URL}/Humangen_Clothing/25_Beach_Day.jpg`,
 ];
 
+const femaleModelPresets = [
+  `${process.env.PUBLIC_URL}/Presets/0_Female1.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/1_Female2.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/2_Female3.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/3_Female4.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/4_Female5.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/5_Female6.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/6_Female7.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/7_Female8.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/8_Female9.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/9_Female10.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/10_Female11.jpg`,
+];
+// ... Add additional images as necessary
+
+const femaleClothPresets = [
+  `${process.env.PUBLIC_URL}/Presets/0_Female1.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/1_Female2.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/2_Female3.jpg`,
+  `${process.env.PUBLIC_URL}/Presets/3_Female4.jpg`,
+];
+
 function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
   const [selectedModel, setSelectedModel] = useState(0);
   const [selectedCloth, setSelectedCloth] = useState(0);
+
+  const [gender, setGender] = useState("male");
 
   const handleModelSelect = (newIndex) => {
     setSelectedModel(newIndex); // This schedules the state to be updated
@@ -108,17 +134,42 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
       (prevIndex) => (prevIndex + increment + array.length) % array.length
     );
   };
+
+  const handleGenderChange = (event, newGender) => {
+    if (newGender !== null) {
+      setGender(newGender);
+      setSelectedModel(0); // Reset the model selection
+      setSelectedCloth(0); // Reset the cloth selection
+    }
+  };
+
+  const currentModelPresets =
+    gender === "male" ? maleModelPresets : femaleModelPresets;
+  const currentClothPresets =
+    gender === "male" ? maleClothPresets : femaleClothPresets;
+
   return (
     <Grid container padding={2}>
       <Grid item xs={12}>
         <Typography variant="h6" gutterBottom sx={{ fontSize: "1rem" }}>
-          Please select your model preset
+          Please select your model and cloth preset
         </Typography>
+        <ToggleButtonGroup
+          value={gender}
+          exclusive
+          onChange={handleGenderChange}
+          fullWidth
+          sx={{ mb: 1 }}
+        >
+          <ToggleButton value="male">Male</ToggleButton>
+          <ToggleButton value="female">Female</ToggleButton>
+        </ToggleButtonGroup>
+
         <Card sx={{ maxWidth: 345, border: "1px solid #ccc", mb: 2 }}>
           <CardMedia
             component="img"
             height="194" // Adjusting image height
-            image={modelPresets[selectedModel]}
+            image={currentModelPresets[selectedModel]}
             alt={`Model Preset ${selectedModel}`}
             sx={{
               width: "auto", // Ensure the width is automatic
@@ -132,8 +183,8 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             <IconButton
               onClick={() =>
                 handleModelSelect(
-                  (selectedModel - 1 + modelPresets.length) %
-                    modelPresets.length
+                  (selectedModel - 1 + currentModelPresets.length) %
+                    currentModelPresets.length
                 )
               }
             >
@@ -141,7 +192,9 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             </IconButton>
             <IconButton
               onClick={() =>
-                handleModelSelect((selectedModel + 1) % modelPresets.length)
+                handleModelSelect(
+                  (selectedModel + 1) % currentModelPresets.length
+                )
               }
             >
               <ArrowForwardIosIcon />
@@ -150,14 +203,11 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h6" gutterBottom sx={{ fontSize: "1rem" }}>
-          Please select your cloth selection
-        </Typography>
         <Card sx={{ maxWidth: 345, border: "1px solid #ccc", mb: 2 }}>
           <CardMedia
             component="img"
             height="194" // Adjusting image height
-            image={clothPresets[selectedCloth]}
+            image={currentClothPresets[selectedCloth]}
             alt={`Cloth Preset ${selectedCloth}`}
             sx={{
               width: "auto", // Ensure the width is automatic
@@ -171,8 +221,8 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             <IconButton
               onClick={() =>
                 handleClothSelect(
-                  (selectedCloth - 1 + clothPresets.length) %
-                    clothPresets.length
+                  (selectedCloth - 1 + currentClothPresets.length) %
+                    currentClothPresets.length
                 )
               }
             >
@@ -180,7 +230,9 @@ function PresetSelector({ onSelectModelPreset, onSelectClothPreset }) {
             </IconButton>
             <IconButton
               onClick={() =>
-                handleClothSelect((selectedCloth + 1) % clothPresets.length)
+                handleClothSelect(
+                  (selectedCloth + 1) % currentClothPresets.length
+                )
               }
             >
               <ArrowForwardIosIcon />

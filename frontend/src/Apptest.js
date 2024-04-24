@@ -68,7 +68,7 @@ function Apptest() {
       {" "}
       {/* Ensure full height */}
       <Grid container spacing={2} style={{ height: "100%" }}>
-        <Grid item xs={4} style={{ height: "100%" }}>
+        <Grid item xs={12} sm={4} style={{ height: "100%" }}>
           {" "}
           {/* Change to xs={4} for 1/3 width */}
           <Paper
@@ -85,7 +85,7 @@ function Apptest() {
             />
           </Paper>
         </Grid>
-        <Grid item xs={4} style={{ height: "100%" }}>
+        <Grid item xs={12} sm={4} style={{ height: "100%" }}>
           {" "}
           {/* Repeat for each section */}
           <Paper
@@ -107,7 +107,7 @@ function Apptest() {
             )}
           </Paper>
         </Grid>
-        <Grid item xs={4} style={{ height: "100%" }}>
+        <Grid item xs={12} sm={4} style={{ height: "100%" }}>
           <Paper
             style={{
               height: "100%",
