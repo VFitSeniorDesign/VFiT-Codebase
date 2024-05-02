@@ -38,6 +38,7 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
   const [currentSkinnyImage, setCurrentSkinnyImage] = useState(0);
   const [currentOverweightImage, setCurrentOverweightImage] = useState(0);
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const muscularityImages = [
     `${process.env.PUBLIC_URL}/muscularityImages/M1.png`,
@@ -77,6 +78,13 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
     `${process.env.PUBLIC_URL}/overweightImages/O9.png`,
     `${process.env.PUBLIC_URL}/overweightImages/O10.png`,
   ]; // Placeholder for muscularity images
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
 
   const handleSliderChange = (setter) => (event, newValue) => {
     setter(newValue);
@@ -135,27 +143,29 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!age || !height) {
-      alert("Please fill in all fields.");
+    if (!age || !height || !selectedFile) {
+      alert("Please fill in all fields and select a file.");
       return;
     }
-    const modelData = {
-      age,
-      height,
-      muscularity,
-      skinny,
-      overweight,
-      chosenClothSelection,
-      chosenPreset,
-    };
+  
+    // Create a FormData object to handle file uploads
+    const formData = new FormData();
+    formData.append("age", age);
+    formData.append("height", height);
+    formData.append("muscularity", muscularity);
+    formData.append("skinny", skinny);
+    formData.append("overweight", overweight);
+    formData.append("chosenClothSelection", chosenClothSelection);
+    formData.append("chosenPreset", chosenPreset);
+    formData.append("file", selectedFile); // Append the image file
+  
     try {
       const response = await fetch("/api/createmodel/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authTokens.access}`,
+          Authorization: `Bearer ${authTokens.access}`, // Keep the authorization header
         },
-        body: JSON.stringify(modelData),
+        body: formData, // Send FormData
       });
       const responseData = await response.json();
       console.log(responseData);
@@ -184,6 +194,14 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
           mx: "auto",
         }}
       >
+
+        <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleFileChange}
+          />
+
         <TextField
           fullWidth
           label="Age"
