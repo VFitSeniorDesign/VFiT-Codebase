@@ -10,6 +10,9 @@ from django.conf import settings
 import subprocess
 import os
 import shutil
+import cv2
+from api.face import process_image
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -53,6 +56,21 @@ def create_model(request):
     if os.path.exists(output_directory):
         shutil.rmtree(output_directory)  
     os.makedirs(output_directory) 
+    
+    print("LAKDUNK:F:AJDL:J")
+    print("VIEWS CURRENT DIR: ", os.getcwd())
+    results = process_image(cv2.imread('./api/mayank2.jpeg'))
+    print("DID IT WORK ")
+    results_test = {
+    "Eye Distance": -1,
+    "Eye Width":  -1,
+    "Eye Height": -1.2384023,
+    "Nose Width": -1,
+    "Nose Height": -1,
+    "Lip Width": -1,
+    "Chin Width": -1,
+    "Chin Height": -1,
+}
 
     # Construct the command to run Blender in the background with your script
     command = [
@@ -69,7 +87,15 @@ def create_model(request):
         str(data.get('chosenClothSelection', '')),
         str(data.get('chosenPreset', '')),
         str(username),
-        str(output_directory)
+        str(output_directory),
+        str(results["Eye Distance"]), #9
+        str(results["Eye Width"]), #10
+        str(results["Eye Height"]), #11
+        str(results["Nose Width"]), #12
+        str(results["Nose Height"]), #13
+        str(results["Lip Width"]), #14
+        str(results["Chin Width"]), #15
+        str(results["Chin Height"]), #16
     ]
     
     try:
