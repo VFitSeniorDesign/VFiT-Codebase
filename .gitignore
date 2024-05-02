@@ -1,3 +1,7 @@
 venv
 node_modules
 __pycache__
+myenv
+media
+media/
+/media/
