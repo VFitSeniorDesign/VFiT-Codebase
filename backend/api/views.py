@@ -12,6 +12,10 @@ import os
 import shutil
 import cv2
 from api.face import process_image
+import tempfile
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
 
 
 
@@ -40,87 +44,87 @@ def register_user(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_model(request):
-    data = request.data
-    username = request.user.username
-    print(username)
-    print(data)
-    
-    #get blender and script paths
-    blender_executable_path = '/Applications/Blender.app/Contents/MacOS/Blender'  # Or the full path if 'blender' is not in PATH
-    cwd = os.getcwd()
-    script_path = os.path.join(cwd, "..", "BlenderFiles", "humanGen.py")
-    print(script_path)
-    #output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username+".glb")
-    #print("output_dir: ", output_directory)
-    output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", username)
-    if os.path.exists(output_directory):
-        shutil.rmtree(output_directory)  
-    os.makedirs(output_directory) 
-    
-    print("LAKDUNK:F:AJDL:J")
-    print("VIEWS CURRENT DIR: ", os.getcwd())
-    results = process_image(cv2.imread('./api/mayank2.jpeg'))
-    print("DID IT WORK ")
-    results_test = {
-    "Eye Distance": -1,
-    "Eye Width":  -1,
-    "Eye Height": -1.2384023,
-    "Nose Width": -1,
-    "Nose Height": -1,
-    "Lip Width": -1,
-    "Chin Width": -1,
-    "Chin Height": -1,
-}
+    # Extract non-file data from request.POST
+    age = request.POST.get('age')
+    height = request.POST.get('height')
+    muscularity = request.POST.get('muscularity')
+    skinny = request.POST.get('skinny')
+    overweight = request.POST.get('overweight')
+    chosenClothSelection = request.POST.get('chosenClothSelection')
+    chosenPreset = request.POST.get('chosenPreset')
+    gender = request.POST.get('chosenGender')
 
-    # Construct the command to run Blender in the background with your script
-    command = [
-        blender_executable_path,  # Run in background without UI
-        '--python', script_path,
-        '--',
-        # Separator between Blender args and script args
-        # Add additional arguments passed to your script here
-        str(data.get('age', '')),
-        str(data.get('height', '')),
-        str(data.get('muscularity', '')),
-        str(data.get('skinny', '')),
-        str(data.get('overweight', '')),
-        str(data.get('chosenClothSelection', '')),
-        str(data.get('chosenPreset', '')),
-        str(username),
-        str(output_directory),
-        str(results["Eye Distance"]), #9
-        str(results["Eye Width"]), #10
-        str(results["Eye Height"]), #11
-        str(results["Nose Width"]), #12
-        str(results["Nose Height"]), #13
-        str(results["Lip Width"]), #14
-        str(results["Chin Width"]), #15
-        str(results["Chin Height"]), #16
-        str(data.get('chosenGender', '')),
-    ]
+    # Extract file data from request.FILES
+    uploaded_file = request.FILES.get('file')
     
+    # Save the uploaded file to a temporary location
+    if uploaded_file:
+        temp_file = tempfile.NamedTemporaryFile(delete=False)
+        for chunk in uploaded_file.chunks():
+            temp_file.write(chunk)
+        temp_file.close()
+        file_path = temp_file.name
+    else:
+        return JsonResponse({"response": "File upload failed"}, status=400)
+
     try:
-        relative_dir = os.path.join("savedModels", username)
-        print("RELATIVE DIR: ", relative_dir)
-        human_model, created = HumanModel.objects.get_or_create(user=request.user)
-        print("human_model:", human_model)
-        print("created:", created)
+        # Process the file using OpenCV
+        results = process_image(cv2.imread(file_path))
+        print("RESULTS:", results)
 
-        # Update the model_path field with the generated model path
+        # Continue with your current logic for running the Blender script
+        blender_executable_path = '/Applications/Blender.app/Contents/MacOS/Blender'
+        cwd = os.getcwd()
+        script_path = os.path.join(cwd, "..", "BlenderFiles", "humanGen.py")
+        
+        output_directory = os.path.join(settings.MEDIA_ROOT, "savedModels", request.user.username)
+        if os.path.exists(output_directory):
+            shutil.rmtree(output_directory)
+        os.makedirs(output_directory)
+
+        command = [
+            blender_executable_path,
+            '--python', script_path,
+            '--',
+            str(age), #0
+            str(height), #1
+            str(muscularity), #2
+            str(skinny), #3
+            str(overweight), #4
+            str(chosenClothSelection), #5
+            str(chosenPreset), #6
+            str(request.user.username), #7
+            str(output_directory), #8
+            str(results.get("Eye Distance", -1)), #9
+            str(results.get("Eye Width", -1)), #10
+            str(results.get("Eye Height", -1)), #11
+            str(results.get("Nose Width", -1)), #12
+            str(results.get("Nose Height", -1)), #13
+            str(results.get("Lip Width", -1)), #14
+            str(results.get("Chin Width", -1)), #15
+            str(results.get("Chin Height", -1)), #16
+            str(results.get("Jaw Width", -1)), #17
+            str(gender) #18
+            
+        ]
+
+        relative_dir = os.path.join("savedModels", request.user.username)
+        human_model, created = HumanModel.objects.get_or_create(user=request.user)
         human_model.model_path = relative_dir
         human_model.save()
 
-
-        result = subprocess.run(command, check=True, capture_output=True, text=True)
-        output = result.stdout  # Capture the output from the script
-        print(output)
+        result = subprocess.run(command, check=True)#, capture_output=True, text=True)
+        #output = result.stdout
+        #print(output)
         print("Success")
-        return JsonResponse({"response": "Script executed successfully!", "output": output})
+        return JsonResponse({"response": "Script executed successfully!"})
     except subprocess.CalledProcessError as e:
-        # Handle errors in script execution
         error_output = e.stderr
         print("Failed")
         return JsonResponse({"response": "Error executing script", "error": error_output}, status=500)
+    finally:
+        # Clean up the temporary file
+        os.remove(file_path)
 
 
 @api_view(['HEAD', 'GET'])
