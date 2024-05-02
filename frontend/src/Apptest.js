@@ -14,12 +14,18 @@ function Apptest() {
 
   const [modelPreset, setModelPreset] = useState(0);
   const [clothPreset, setClothPreset] = useState(0);
+  const [gender, setGender] = useState("male");
 
   const handleModelPresetSelect = (preset) => {
     setModelPreset(preset);
     console.log("Selected modelPreset index", modelPreset);
     // This will correctly log the newly selected preset index.
     // Additional logic for when a model preset is selected goes here.
+  };
+
+  const handleGenderSelect = (selectedGender) => {
+    setGender(selectedGender);
+    console.log("Selected Gender", selectedGender);
   };
 
   const handleClothPresetSelect = (preset) => {
@@ -82,6 +88,7 @@ function Apptest() {
             <PresetSelector
               onSelectModelPreset={handleModelPresetSelect}
               onSelectClothPreset={handleClothPresetSelect}
+              onSelectGender={handleGenderSelect}
             />
           </Paper>
         </Grid>
@@ -119,6 +126,7 @@ function Apptest() {
             <CreateModelTest
               chosenPreset={modelPreset}
               chosenClothSelection={clothPreset}
+              chosenGender={gender}
             />
           </Paper>
         </Grid>

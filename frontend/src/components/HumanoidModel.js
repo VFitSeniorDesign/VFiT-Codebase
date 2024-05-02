@@ -59,7 +59,8 @@ function HumanoidModel({ username, files, modelPath }) {
       model.position.y = -2;
 
       model.traverse((child) => {
-        console.log(child);
+        console.log(child, child.name);
+
         if (child.isMesh && child.name.startsWith("HG_")) {
           let material = child.material;
           if (!material.isMeshStandardMaterial) {
@@ -143,6 +144,42 @@ function HumanoidModel({ username, files, modelPath }) {
           );
           material.normalMap = loadTexture(
             `http://localhost:8000/media/savedModels/${username}/${username}_hairHaircards_normal.png`
+          );
+          material.transparent = true;
+          material.side = THREE.DoubleSide; // Render both sides
+          //   material.alphaTest = 0.5;
+          material.needsUpdate = true;
+        }
+
+        if (child.isMesh && child.name == "hair") {
+          let material = ensureStandardMaterial(child);
+          // Now apply the textures to the material
+          material.map = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hairHaircards_base color.png`
+          );
+          material.alphaMap = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hairHaircards_alpha.png`
+          );
+          material.normalMap = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hairHaircards_normal.png`
+          );
+          material.transparent = true;
+          material.side = THREE.DoubleSide; // Render both sides
+          //   material.alphaTest = 0.5;
+          material.needsUpdate = true;
+        }
+
+        if (child.isMesh && child.name == "hair_1") {
+          let material = ensureStandardMaterial(child);
+          // Now apply the textures to the material
+          material.map = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hair2Haircards_base color.png`
+          );
+          material.alphaMap = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hair2Haircards_alpha.png`
+          );
+          material.normalMap = loadTexture(
+            `http://localhost:8000/media/savedModels/${username}/${username}_hair2Haircards_normal.png`
           );
           material.transparent = true;
           material.side = THREE.DoubleSide; // Render both sides

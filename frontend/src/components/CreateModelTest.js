@@ -22,7 +22,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import AttributeHelpModal from "./AttributeHelpModal";
 
-function CreateModelTest({ chosenPreset, chosenClothSelection }) {
+function CreateModelTest({ chosenPreset, chosenClothSelection, chosenGender }) {
   let { authTokens } = useContext(AuthContext);
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
@@ -132,6 +132,7 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
 
   console.log(chosenPreset, "model from form ");
   console.log(chosenClothSelection, "cloth from form ");
+  console.log(chosenGender, "hhhhs ");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,6 +148,7 @@ function CreateModelTest({ chosenPreset, chosenClothSelection }) {
       overweight,
       chosenClothSelection,
       chosenPreset,
+      chosenGender,
     };
     try {
       const response = await fetch("/api/createmodel/", {

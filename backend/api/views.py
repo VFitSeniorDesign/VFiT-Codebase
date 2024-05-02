@@ -96,6 +96,7 @@ def create_model(request):
         str(results["Lip Width"]), #14
         str(results["Chin Width"]), #15
         str(results["Chin Height"]), #16
+        str(data.get('chosenGender', '')),
     ]
     
     try:

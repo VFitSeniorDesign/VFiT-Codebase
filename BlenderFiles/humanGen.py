@@ -4,11 +4,11 @@ import bpy
 import sys
 import argparse
 
-def create_human(name, age, height, body_dict, cloth_selection, preset):
+def create_human(name, age, height, body_dict, cloth_selection, preset, gender):
     # Human creation and customization logic
     
-    human_options = Human.get_preset_options("male")  # Adjust as needed
-    chosen_option = human_options[preset]
+    human_options = Human.get_preset_options(gender)  # Adjust as needed
+    chosen_option = human_options[13]
     my_human = Human.from_preset(chosen_option)
 
     my_human.name = name
@@ -16,26 +16,26 @@ def create_human(name, age, height, body_dict, cloth_selection, preset):
 
     # Additional attributes like height could be managed within the body_dict if applicable
 
-
     my_human.keys.set_from_dict(body_dict)
 
     print(my_human.keys.as_dict())  # Debugging output
 
     cloths_options = my_human.clothing.outfit.get_options()
-    chosen_cloth = cloths_options[cloth_selection] # Select specific one, or randomly
+    chosen_cloth = cloths_options[13] # Select specific one, or randomly
  
     
     # Adjust as needed
     my_human.clothing.outfit.set(chosen_cloth)
+    
     try:
         my_human.hair.eyebrows.convert_to_haircards()
     except HumGen3D.common.exceptions.HumGenException as e:
         print(f"no eyebrows: {e}")
-    try:
-        my_human.hair.face_hair.convert_to_haircards()
+    # try:
+    #     my_human.hair.face_hair.convert_to_haircards()
         
-    except HumGen3D.common.exceptions.HumGenException as e:
-        print(f"no facehair: {e}")
+    # except HumGen3D.common.exceptions.HumGenException as e:
+    #     print(f"no facehair: {e}")
     try:
         my_human.hair.regular_hair.convert_to_haircards()
     except HumGen3D.common.exceptions.HumGenException as e:
@@ -160,7 +160,6 @@ def customize_body_settings(muscularity, skinniness, overweight, eye_distance, e
 
 def main():
     # Example inputs - these could be replaced with dynamic inputs from a UI or command line arguments
-    print("Hello from backend! 2")
     bpy.ops.object.select_all(action='DESELECT')  # Deselect all objects
 
     # Select the default objects by their type
@@ -195,6 +194,7 @@ def main():
     lip_width = argv[14]
     chin_width = argv[15]
     chin_height = argv[16]
+    gender = argv[17]
     #error logging
     '''
     with open('output.log', 'w') as f:
@@ -252,10 +252,11 @@ def main():
     # Customize body settings based on inputs or logic
     body_dict = customize_body_settings(muscularity=muscularity, skinniness=skinny, overweight=overweight, eye_distance= float(eye_distance), eye_width=float(eye_width), eye_height=float(eye_height), nose_width=float(nose_width), nose_height= float(nose_height), lip_width=float(lip_width), chin_width=float(chin_width), chin_height=float(chin_height))
         # Call the function to create and customize the human model
-    my_human= create_human(name, age, height, body_dict, cloth_selection, preset)
+    my_human= create_human(name, age, height, body_dict, cloth_selection, preset, gender=gender)
 
     temp_directory = f"{output_directory}/{name}.glb"
     # Export the model with materials in GLB format
+    print("Exporting model to:", temp_directory)
     bpy.ops.export_scene.gltf(
         filepath=temp_directory,
         export_format='GLB',
