@@ -10,7 +10,8 @@ The model is exported as a GLB file. We also bake the textures and export them a
 
 2.1. Overview block diagram
 
-image
+![image](https://github.com/VFitSeniorDesign/VFiT-Codebase/assets/85473680/fbda1f25-53bd-4c1c-b99e-2e62a33350ca)
+
 Fig. 2.1 An overview of the system design
 
 Overview of Each Software Module
