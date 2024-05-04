@@ -2,9 +2,9 @@ The project can be installed by installing blender and the humangen add-on as we
 
 > git clone git@github.com:VFitSeniorDesign/VFiT-Codebase.git
 
-Switch to the branch aryaman_testing: 
+Switch to the branch ece_day: 
 
-> git checkout aryaman_testing
+> git checkout ece_day
 
 The repository can be found at https://github.com/VFitSeniorDesign/VFiT-Codebase/tree/main Once all the software is installed, the project can be setup by running the following commands:
 
