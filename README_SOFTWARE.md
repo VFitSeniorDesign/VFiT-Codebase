@@ -15,22 +15,22 @@ The model is exported as a GLB file. We also bake the textures and export them a
 Fig. 2.1 An overview of the system design
 
 Overview of Each Software Module
-Django (Backend Server)
+#Django (Backend Server)
 
 Functionality: Django serves as the backend server in this setup. It handles API requests from the React frontend, processes them, and manages the interaction with Blender.
 Responsibilities: Managing the API endpoints, receiving body parameter inputs from React, invoking Blender operations, and handling the output (baked and exported models) to be sent back to the client.
 
-React (Frontend)
+#React (Frontend)
 
 Functionality: React is used for building the user interface where users input body parameters and view the rendered models.
 Responsibilities: Capturing user inputs, sending API requests to the Django server, and displaying the models received from the backend.
 
-Blender with Human Generator Add-On
+#Blender with Human Generator Add-On
 
 Functionality: Blender, equipped with the Human Generator add-on, is responsible for creating 3D human models based on parameters received from the Django server.
 Responsibilities: Generating, baking, and exporting 3D models as per the specifications received from the Django backend.
 
-React Components Overview
+#React Components Overview
 AttributeHelpModal.js
 
 Description: This component provides a user interface for displaying help or information about the different attributes that can be set for a humanoid model.
