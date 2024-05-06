@@ -188,7 +188,15 @@ function CreateModelTest({ chosenPreset, chosenClothSelection, chosenGender }) {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container
+      maxWidth="sm"
+      style={{
+        height: "100vh",
+        marginTop: "15%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Typography variant="h5" gutterBottom align="center" sx={{ mb: 3 }}>
         Enter your attributes !
       </Typography>
@@ -204,6 +212,8 @@ function CreateModelTest({ chosenPreset, chosenClothSelection, chosenGender }) {
           width: "100%",
           maxWidth: 360,
           mx: "auto",
+          fontSize: "1.5rem",
+          fontStyle: "bold",
         }}
       >
         <input
@@ -211,6 +221,7 @@ function CreateModelTest({ chosenPreset, chosenClothSelection, chosenGender }) {
           accept="image/*"
           capture="environment"
           onChange={handleFileChange}
+          style={{ alignSelf: "center" }}
         />
 
         <TextField
@@ -243,11 +254,11 @@ function CreateModelTest({ chosenPreset, chosenClothSelection, chosenGender }) {
           step={1}
           marks
           min={1}
-          max={10}
+          max={5}
         />
 
         <Typography gutterBottom>
-          Skinnyness{" "}
+          Skinniness{" "}
           <IconButton onClick={toggleSkinnyModal}>
             <HelpOutlineIcon />
           </IconButton>

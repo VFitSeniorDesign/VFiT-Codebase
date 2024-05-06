@@ -80,11 +80,11 @@ def process_image(image):
         for  k, v in measurements.items():
             if k == "Eye Distance (cm)":
                 if v < 7.75:
-                    blender_conversion["Eye Distance"] = 1.5
+                    blender_conversion["Eye Distance"] = 0
                 elif v > 11.75:
-                    blender_conversion["Eye Distance"] = -1.5
+                    blender_conversion["Eye Distance"] = 0
                 else:
-                    blender_conversion["Eye Distance"] = -((measurements[k] - 9.5) * .75)
+                    blender_conversion["Eye Distance"] = 0#-((measurements[k] - 9.5) * .75)
 
             elif k == "Eye Width (cm)":
                 if v < 2.15:
@@ -104,7 +104,7 @@ def process_image(image):
             
             elif k == "Nose Width (cm)":
                 if v < 3:
-                    blender_conversion["Nose Width"] = -1.5
+                    blender_conversion["Nose Width"] = -1
                 elif v > 5:
                     blender_conversion["Nose Width"] = 1.5
                 else:
@@ -143,11 +143,11 @@ def process_image(image):
                     blender_conversion["Chin Height"] = (measurements[k] - 2.55) * (4/1.5)
             elif k == "Jaw Width (cm)":
                 if v < 11:
-                    blender_conversion["Jaw Width"] = -2
+                    blender_conversion["Jaw Width"] = -1
                 elif v > 15:
-                    blender_conversion["Jaw Width"] = 2
+                    blender_conversion["Jaw Width"] = 0
                 else:
-                    blender_conversion["Jaw Width"] = (measurements[k] - 13)
+                    blender_conversion["Jaw Width"] = 0#(measurements[k] - 13)*(1/2)
         
         return blender_conversion
 
